@@ -1,0 +1,281 @@
+*02:47:45.359 UTC Sun Apr 8 2018
+Building configuration...
+
+Current configuration : 3829 bytes
+!
+! Last configuration change at 00:31:38 UTC Sun Apr 8 2018
+!
+version 16.6
+service timestamps debug datetime msec
+service timestamps log datetime msec
+platform qfp utilization monitor load 80
+no platform punt-keepalive disable-kernel-core
+platform console virtual
+!
+hostname CSR1000V-1
+!
+boot-start-marker
+boot-end-marker
+!
+!
+enable secret 5 $1$/CE/$8eTzEP2ZPj1ewzHPy7MbP1
+!
+no aaa new-model
+!
+ip vrf A
+!
+ip vrf B
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+subscriber templating
+! 
+! 
+! 
+! 
+!
+!
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+crypto pki trustpoint TP-self-signed-3356782199
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-3356782199
+ revocation-check none
+ rsakeypair TP-self-signed-3356782199
+!
+!
+crypto pki certificate chain TP-self-signed-3356782199
+ certificate self-signed 01
+  30820330 30820218 A0030201 02020101 300D0609 2A864886 F70D0101 05050030 
+  31312F30 2D060355 04031326 494F532D 53656C66 2D536967 6E65642D 43657274 
+  69666963 6174652D 33333536 37383231 3939301E 170D3138 30333239 32313031 
+  32325A17 0D323030 31303130 30303030 305A3031 312F302D 06035504 03132649 
+  4F532D53 656C662D 5369676E 65642D43 65727469 66696361 74652D33 33353637 
+  38323139 39308201 22300D06 092A8648 86F70D01 01010500 0382010F 00308201 
+  0A028201 010095CF 981BD480 221DE66D A2561A3A 16C2798B FBFDE004 58D10633 
+  7F1C1A23 B8BA0A1E 811A73B2 F365BED3 90E853B1 815FF30E DAE262B6 56A0698F 
+  8FF2D7F7 AE371C9A 5ED49688 698D7AD2 9DB45EA6 83976930 957B78C4 FFA24F61 
+  F5C8D9CF 7B283C2E 1A1DB28D 22075C84 78E2872E B81AC8F4 15FF6E9A AA55B0A3 
+  69DFBBF2 DFF78861 A99BBFAD 911C1F9A 460C5C0B 1035243F DB9EA5CE B65E01BE 
+  EB83F0AB 3BC45C7D 3A7D5243 2CD43C17 4270ABDF A5922789 5DB293E5 0EACFFEC 
+  6FB00053 4E48DE88 C56E7684 D6409204 B5C56565 AC53318F 881F7713 654A3110 
+  70B4FBC4 5F92223F 8F51E824 E6225E18 B81A13C9 8DAF1F23 F01C7A6E 2D068B92 
+  4C53F476 59DF0203 010001A3 53305130 0F060355 1D130101 FF040530 030101FF 
+  301F0603 551D2304 18301680 14DDC839 F9FE0162 452554B3 DC875463 3974F9F0 
+  E7301D06 03551D0E 04160414 DDC839F9 FE016245 2554B3DC 87546339 74F9F0E7 
+  300D0609 2A864886 F70D0101 05050003 82010100 56728504 F0718008 6ED3FDA3 
+  27EDDE17 FBC44087 AE7560BF F0896FF4 8667277D A3789F7A F9E5A129 DDA76EBE 
+  3E34A267 76C136F4 8B849033 BE971C46 038ADC24 A8CAFBCD 120C4BAC FE61674A 
+  280F5B9D EF01B055 DBB1B7DB F530C956 3E2AB857 763A1164 113B6393 59FFE56D 
+  83628285 34D41B61 9583098F 145D2EE6 75F196DE D872F81A 29EE7FF1 55EEF848 
+  A75C6BC2 5EEA2DAA 9119A729 3F2C61B5 AB411E9E 0C3BA013 B0E74F10 A5964F0D 
+  7746513A 2BDB3921 4E3C4005 CF67380E 9B15A91F 060DA132 63EB8315 3BC658E8 
+  05F3CEF4 5A9B958B 1A4879E9 68F83528 A8D242B5 EDC1CAB6 95C4277E 0EDA409E 
+  A7E63503 4E627ACD 19134CEC 629E854B 38A453D7
+  	quit
+!
+!
+!
+!
+!
+!
+!
+!
+!
+license udi pid CSR1000V sn 9F8T0OYAJ13
+diagnostic bootup level minimal
+file prompt quiet
+spanning-tree extend system-id
+!
+!
+!
+username admin password 0 ********
+!
+redundancy
+!
+!
+!
+!
+!
+!
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+! 
+! 
+!
+!
+interface GigabitEthernet1
+ ip address 192.168.1.129 255.255.255.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet2
+ ip vrf forwarding A
+ ip address 192.168.1.130 255.255.255.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet3
+ ip vrf forwarding B
+ ip address 192.168.1.131 255.255.255.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+!
+virtual-service csr_mgmt
+!
+ip forward-protocol nd
+no ip http server
+no ip http secure-server
+!
+ip ssh version 2
+!
+!
+!
+!
+!
+control-plane
+!
+!
+!
+!
+!
+!
+line con 0
+ stopbits 1
+line vty 0
+ session-timeout 60 
+ login local
+line vty 1
+ session-timeout 60 
+ login local
+ length 0
+line vty 2 4
+ session-timeout 60 
+ login local
+line vty 5 15
+ session-timeout 60 
+ login local
+!
+wsma agent exec
+!
+wsma agent config
+!
+wsma agent filesys
+!
+wsma agent notify
+!
+!
+end
+Cisco IOS XE Software, Version 16.06.03
+Cisco IOS Software [Everest], Virtual XE Software (X86_64_LINUX_IOSD-UNIVERSALK9-M), Version 16.6.3, RELEASE SOFTWARE (fc8)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2018 by Cisco Systems, Inc.
+Compiled Wed 28-Feb-18 23:53 by mcpre
+
+
+Cisco IOS-XE software, Copyright (c) 2005-2018 by cisco Systems, Inc.
+All rights reserved.  Certain components of Cisco IOS-XE software are
+licensed under the GNU General Public License ("GPL") Version 2.0.  The
+software code licensed under GPL Version 2.0 is free software that comes
+with ABSOLUTELY NO WARRANTY.  You can redistribute and/or modify such
+GPL code under the terms of GPL Version 2.0.  For more details, see the
+documentation or "License Notice" file accompanying the IOS-XE software,
+or the applicable URL provided on the flyer accompanying the IOS-XE
+software.
+
+
+ROM: IOS-XE ROMMON
+
+CSR1000V-1 uptime is 4 hours, 9 minutes
+Uptime for this control processor is 4 hours, 13 minutes
+System returned to ROM by reload
+System image file is "bootflash:packages.conf"
+Last reload reason: Reload Command
+
+
+
+This product contains cryptographic features and is subject to United
+States and local country laws governing import, export, transfer and
+use. Delivery of Cisco cryptographic products does not imply
+third-party authority to import, export, distribute or use encryption.
+Importers, exporters, distributors and users are responsible for
+compliance with U.S. and local country laws. By using this product you
+agree to comply with applicable laws and regulations. If you are unable
+to comply with U.S. and local laws, return this product immediately.
+
+A summary of U.S. laws governing Cisco cryptographic products may be found at:
+http://www.cisco.com/wwl/export/crypto/tool/stqrg.html
+
+If you require further assistance please contact us by sending email to
+export@cisco.com.
+
+License Level: ax
+License Type: Default. No valid license found.
+Next reload license Level: ax
+
+cisco CSR1000V (VXE) processor (revision VXE) with 2190130K/3075K bytes of memory.
+Processor board ID 9F8T0OYAJ13
+3 Gigabit Ethernet interfaces
+32768K bytes of non-volatile configuration memory.
+3984860K bytes of physical memory.
+7774207K bytes of virtual hard disk at bootflash:.
+0K bytes of WebUI ODM Files at webui:.
+
+Configuration register is 0x2102
+Interface              IP-Address      OK? Method Status                Protocol
+GigabitEthernet1       192.168.1.129   YES manual up                    up      
+GigabitEthernet2       192.168.1.130   YES manual up                    up      
+GigabitEthernet3       192.168.1.131   YES manual up                    up
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area 
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override, p - overrides from PfR
+
+Gateway of last resort is not set
+
+      192.168.1.0/24 is variably subnetted, 2 subnets, 2 masks
+C        192.168.1.0/24 is directly connected, GigabitEthernet1
+L        192.168.1.129/32 is directly connected, GigabitEthernet1
+Protocol  Address          Age (min)  Hardware Addr   Type   Interface
+Internet  192.168.1.129           -   000c.2981.7cc8  ARPA   GigabitEthernet1
+Internet  192.168.1.132         105   000c.2911.d81f  ARPA   GigabitEthernet1
+Internet  192.168.1.133          27   000c.2911.d81f  ARPA   GigabitEthernet1

@@ -1,0 +1,53 @@
+---
+ansible_connection: local
+ansible_network_os: ios
+ios_creditentials:
+  timeout: 3
+  username: admin
+  password: !vault |
+            $ANSIBLE_VAULT;1.2;AES256;router_ssh
+            39663264633633656163346339373765386564623632303830393536346330616132623765343439
+            3139386463336261343463303534303165646639633964660a386666383531623135303262343264
+            62386462353264653437333764323737376462313232346638373336313065653162376636316364
+            3235316238353139350a333162633165393464396232356338643631623461343536643034383337
+            3866
+  authorize: yes
+  auth_pass: !vault |
+            $ANSIBLE_VAULT;1.2;AES256;router_enable
+            61303565376632623165636332363030343231393666353637373962303137653561623134333336
+            6435643564303863636339373836313438383137363065300a623832303164303735396138313862
+            62643764316239303065336135666434353661663531646438313165313632353364346334643737
+            3030396265383735340a303238623331316534333130626237373462613731346165336139353534
+            6233
+
+#The following is only supported from Ansible 2.5
+#ansible_connection=network_cli
+#ansible_become=yes
+#ansible_become_method=enable
+#ansible_become_password=abc123
+
+
+# Methods to generate the encrypt password:
+#
+# Command Line: ansible-vault encrypt_string --vault-id router_ssh@prompt 'abc123' --name 'password'
+#
+# 1. It needs to attach a "vault-id" to represent the ciphertext (e.g. router_ssh)
+# 2. It needs to pass the ansible variable name to the ansible-vault (e.g. ansible_ssh_pass)
+# 3. It needs to pass the vault password to encrypt the password (e.g. prompt = type the vault password)
+# 4. The password itself (e.g. 'abc123' in the following example)
+# 5. Capture the output and paste them to the variable yaml file.
+# 
+# Example 1: Encrypt the SSH Password
+# ansible-vault encrypt_string --vault-id router_ssh@prompt 'SSH123' --name 'password'
+#
+# Example 2: Encrypt the Enable Password
+# ansible-vault encrypt_string --vault-id router_enable@prompt 'ENABLE456' --name 'auth_pass' 
+# 
+# To run the playbook with password vault:
+# 1. Prompt for vault password during command line
+# Command:
+# ansible-playbook network_config_backup.yml --vault-id router_username@prompt --vault-id router_enable@prompt
+# 
+# 2. Save the vault password as an file and specify the vault password on the command
+# Command:
+# ansible-playbook network_config_backup.yml --vault-id router_ssh@./vault_password_file --vault-id router_enable@./vault_password_file

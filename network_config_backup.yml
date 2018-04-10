@@ -1,0 +1,42 @@
+---
+- hosts: all
+  gather_facts: no
+  connection: local
+
+  tasks:
+   - name: Create Date for folder creation
+     set_fact: date="{{lookup('pipe','date +%Y%m%d')}}"
+     tags: date_stamp
+     run_once: true
+
+   - name: Create backup folder
+     file:
+      path: "/etc/ansible/network_backup/{{ date }}"
+      state: directory
+      recurse: yes
+     run_once: true
+     tags: create_folder
+
+   - name: Configuration & Status Capture
+     ios_command:
+      commands:
+        - show clock
+        - show run
+        - show version
+        - show ip interface brief
+        - show ip route
+        - show arp
+      provider: "{{ ios_creditentials }}"
+     register: capture_output
+     tags: command_capture
+
+   - name: Create timestamp for file creation
+     set_fact: datetime="{{lookup('pipe','date +%Y%m%d%H%M%S')}}"
+     run_once: true
+     tags: time_stamp
+     
+   - name: save output to /etc/ansible/network_backup
+     copy: 
+       content: "{{ capture_output.stdout | join('\n') }}"
+       dest: "/etc/ansible/network_backup/{{ date }}/{{ inventory_hostname }}_{{datetime}}.txt"
+     tags: create_file
